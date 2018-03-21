@@ -1,0 +1,58 @@
+% Detecci�n de bordes
+clear all;
+close all;
+clc;
+
+img =imread('car.jpg');
+
+img2=rgb2gray(img);
+
+[x,y]=size(img2);
+
+for i=2:x-1
+    for j=2:y-1
+%% SOBEL
+        img3(i,j) = img2(i-1,j+1)+2*img2(i,j+1)+img2(i+1,j+1)-img2(i-1,j-1)-2*img2(i,j-1)-img2(i+1,j-1);
+        img4(i,j) = img2(i+1,j+1)+2*img2(i+1,j)+img2(i+1,j-1)-img2(i-1,j-1)-2*img2(i,j-1)-img2(i-1,j+1);
+%% GRADIENTE DE PREWITT
+        img5(i,j) = img2(i-1,j+1)+img2(i,j+1)+img2(i+1,j+1)-img2(i-1,j-1)-img2(i,j-1)-img2(i+1,j-1);
+        img6(i,j) = img2(i+1,j+1)+img2(i+1,j)+img2(i+1,j-1)-img2(i-1,j-1)-img2(i,j-1)-img2(i-1,j+1);
+%% GRADIENTE DE ROBERTS
+        img7(i,j) = img2(i-1,j)-img2(i,j-1);
+        img8(i,j) = img2(i,j)-img2(i-1,j-1);
+    end    
+end
+sel = input('Ingresa el filtro que deseas visualizar: \n1. Sobel\n2. Prewitt\n3. Roberts\n');
+%seln = str2num(sel);
+switch sel
+    case 1,
+        figure;
+        imshow(img2);
+        figure;
+        imshow(img3);
+        figure;
+        imshow(img4);
+        img9=img3+img4;
+        figure;
+        imshow(img9);
+    case 2,
+        figure;
+        imshow(img2);
+        figure;
+        imshow(img5);
+        figure;
+        imshow(img6);
+        img9=img5+img6;
+        figure;
+        imshow(img9);
+    otherwise
+        figure;
+        imshow(img2);
+        figure;
+        imshow(img7);
+        figure;
+        imshow(img8);
+        img9=img7+img8;
+        figure;
+        imshow(img9);
+end
